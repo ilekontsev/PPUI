@@ -1,9 +1,25 @@
 {
   "name": "@app-ui/source",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "npx nx serve host"
+    "affected:lint": "nx affected --target=lint --parallel --maxParallel=4",
+    "affected:lint:commit": "nx affected --target=lint --parallel --maxParallel=4 --uncommitted --verbose",
+    "affected:test": "nx affected --target=test --parallel --maxParallel=4",
+    "affected:test:commit": "nx affected --target=test --parallel --maxParallel=4 --uncommitted --verbose",
+    "lint": "npm run affected:lint",
+    "test": "npm run affected:test",
+    "start": "nx serve host"
+  },
+  "lint-staged": {
+    "*.{js,ts,html,json}": [
+      "prettier --write",
+      "npm run affected:lint:commit",
+      "npm run affected:test:commit"
+    ],
+    "*.{scss,css,less,sass}": [
+      "prettier --write"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -19,6 +35,7 @@
     "@angular/ssr": "~18.1.0",
     "@nx/angular": "19.5.6",
     "express": "~4.18.2",
+    "normalize.css": "^8.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -56,9 +73,11 @@
     "eslint": "~8.57.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.13.4",
+    "husky": "^9.1.4",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-preset-angular": "~14.1.0",
+    "lint-staged": "^15.2.8",
     "nx": "19.5.6",
     "prettier": "^2.6.2",
     "ts-jest": "^29.1.0",
